@@ -24,3 +24,6 @@
 ## File-based project format:
 *.iws
 
+## Misc files
+*.xls
+*.xlsx
