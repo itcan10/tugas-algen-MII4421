@@ -13,7 +13,7 @@ if sys_platform[:3] == "win":
     from pyevolve import msvcrt
 
 
-class GAUtil(GSimpleGA.GSimpleGA):
+class GeneticAlgorithm(GSimpleGA.GSimpleGA):
     def evolve(self, freq_stats=0):
         """ Do all the generations until the termination criteria, accepts
         the freq_stats (default is 0) to dump statistics at n-generation
@@ -65,8 +65,8 @@ class GAUtil(GSimpleGA.GSimpleGA):
                 if freq_stats:
                     if (self.currentGeneration % freq_stats == 0) or (self.getCurrentGeneration() == 0):
                         self.printStats()
-                        print self.bestIndividual()
-
+                        for i in range(0, 10):
+                            print self.internalPop.bestFitness(i)
                 if self.dbAdapter:
                     if self.currentGeneration % self.dbAdapter.getStatsGenFreq() == 0:
                         self.dumpStatsDB()

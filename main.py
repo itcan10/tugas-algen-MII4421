@@ -1,4 +1,4 @@
-import util
+import ga
 
 from pyevolve import (
     G2DBinaryString,
@@ -122,14 +122,14 @@ def run_main():
     chromosome.mutator.set(Mutators.G2DBinaryStringMutatorSwap)
     chromosome.evaluator.set(eval_func)
 
-    ga = util.GAUtil(chromosome)
-    ga.setMinimax(Consts.minimaxType["minimize"])
-    ga.selector.set(Selectors.GRankSelector)
-    ga.setPopulationSize(POP_SIZE)
-    ga.setGenerations(GENERATIONS)
-    ga.evolve(freq_stats=10)
+    ga_instance = ga.GeneticAlgorithm(chromosome)
+    ga_instance.setMinimax(Consts.minimaxType["minimize"])
+    ga_instance.selector.set(Selectors.GRankSelector)
+    ga_instance.setPopulationSize(POP_SIZE)
+    ga_instance.setGenerations(GENERATIONS)
+    ga_instance.evolve(freq_stats=1)
 
-    print ga.bestIndividual()
+    print ga_instance.bestIndividual()
 
 if __name__ == "__main__":
     run_main()
