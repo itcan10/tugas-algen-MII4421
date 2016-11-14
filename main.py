@@ -1,6 +1,7 @@
+import util
+
 from pyevolve import (
     G2DBinaryString,
-    GSimpleGA,
     Selectors,
     Crossovers,
     Mutators,
@@ -28,8 +29,8 @@ STOVE_POWER = 1.5
 MICROWAVE_POWER = 0.5
 
 PENALTY = 999
-POP_SIZE = 100
-GENERATIONS = 200
+POP_SIZE = 50
+GENERATIONS = 100
 
 
 def generate_chromosome(genome):
@@ -115,26 +116,19 @@ def eval_func(chromosome):
 
 def run_main():
     chromosome = G2DBinaryString.G2DBinaryString(8, 48)
-    chromosome.crossover.set(Crossovers.G2DBinaryStringXSingleHPoint)
-    chromosome.mutator.set(Mutators.G2DBinaryStringMutatorSwap)
-
-    # Generate chromosome
     chromosome = generate_chromosome(chromosome)
 
-    # The evaluator function (objective function)
+    chromosome.crossover.set(Crossovers.G2DBinaryStringXUniform)
+    chromosome.mutator.set(Mutators.G2DBinaryStringMutatorSwap)
     chromosome.evaluator.set(eval_func)
 
-    # Genetic Algorithm Instance
-    ga = GSimpleGA.GSimpleGA(chromosome)
+    ga = util.GAUtil(chromosome)
     ga.setMinimax(Consts.minimaxType["minimize"])
     ga.selector.set(Selectors.GRankSelector)
     ga.setPopulationSize(POP_SIZE)
     ga.setGenerations(GENERATIONS)
-
-    # Do the evolution
     ga.evolve(freq_stats=10)
 
-    # Best individual
     print ga.bestIndividual()
 
 if __name__ == "__main__":
